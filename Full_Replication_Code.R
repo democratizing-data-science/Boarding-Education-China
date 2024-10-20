@@ -168,7 +168,7 @@ texreg(list(Upsweighte.end, Upsweightc.end), use.packages=TRUE, label="tab:3", c
 
 ### These Oster's procedures require STATA
 ssc install psacalc 
-insheet using "G:\My Drive\Phudcfily\Chinese context\Paper and TWANG\boarding_weightstwang.csv", clear
+insheet using "https://raw.githubusercontent.com/democratizing-data-science/Boarding-Education-China/refs/heads/main/boarding_weightstwang.csv", clear
 
 pstest age age_sq educ educ_sq married nodegree black hisp re74 re75 re74_sq re75_sq u74 u75 u74_hisp u74_black, t(treatment) both mweight(w) scatter
 
