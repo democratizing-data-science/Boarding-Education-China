@@ -10,7 +10,7 @@ package.check <- lapply(
   }
 )
 
-boarding_china<-read.csv("students cleaned version.csv")
+boarding_china<-read.csv("https://raw.githubusercontent.com/democratizing-data-science/Boarding-Education-China/refs/heads/main/students%20cleaned%20version.csv")
 
 boarding_china$hukou<-NA
 boarding_china$hukou[boarding_china$sAgricultural.Hukou==1]<-"Agricultural"
