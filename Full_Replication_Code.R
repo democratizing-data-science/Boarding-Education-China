@@ -166,3 +166,183 @@ Upsweightc.end <- lm(eng_pct ~ t_e + trad_eng, data = boarding_china[!is.na(boar
 
 texreg(list(Upsweighte.end, Upsweightc.end), use.packages=TRUE, label="tab:3", caption="Testing for Rurality Impact on English", scriptsize=FALSE, custom.model.names=c("English Proficiency Empty","English Proficiency Control"), float.pos="b")
 
+### These Oster's procedures require STATA
+ssc install psacalc 
+insheet using "G:\My Drive\Phudcfily\Chinese context\Paper and TWANG\boarding_weightstwang.csv", clear
+
+pstest age age_sq educ educ_sq married nodegree black hisp re74 re75 re74_sq re75_sq u74 u75 u74_hisp u74_black, t(treatment) both mweight(w) scatter
+
+regress chn_pct treatment trad_chn  
+display 1.3 * 0.2977
+psacalc delta treatment, rmax(.38701)
+*delta        |      -4.37120
+
+*Table 2 aggregate
+regress chn_pct treatment trad_chn [pweight=w]  
+display 1.3 * 0.3452
+psacalc delta treatment, rmax(.44876)
+*delta        |      84.54830
+
+regress mat_pct treatment trad_mat [pweight=w]  
+display 1.3 * 0.4679
+psacalc delta treatment, rmax(.60827)
+*delta        |      1502.275
+
+regress eng_pct treatment trad_eng [pweight=w]  
+display 1.3 * 0.4097
+psacalc delta treatment, rmax(.53261)
+*delta        |      1502.275
+
+*Table 3 rural
+regress chn_pct treatment trad_chn [pweight=w]  if hukou == "Agricultural"
+display 1.3 * 0.3460
+psacalc delta treatment, rmax(.4498)
+*delta        |      411.66
+
+regress mat_pct treatment trad_mat [pweight=w]  if hukou == "Agricultural"
+display 1.3 * 0.4681
+psacalc delta treatment, rmax(.60853)
+*delta        |      32.35
+
+regress eng_pct treatment trad_eng [pweight=w]  if hukou == "Agricultural"
+display 1.3 * 0.4127
+psacalc delta treatment, rmax(.53651)
+*delta        |      -19.473
+
+regress chn_pct treatment trad_chn [pweight=w]  if hukou != "Agricultural"
+display 1.3 * 0.3498
+psacalc delta treatment, rmax(.45474)
+*delta        |      6.065
+
+regress mat_pct treatment trad_mat [pweight=w]  if hukou != "Agricultural"
+display 1.3 * 0.4722
+psacalc delta treatment, rmax(.61386)
+*delta        |      3.375
+
+regress eng_pct treatment trad_eng [pweight=w]  if hukou != "Agricultural"
+display 1.3 * 0.4092
+psacalc delta treatment, rmax(.53196)
+*delta        |      24.84
+
+*Table 4 SES
+regress chn_pct treatment trad_chn [pweight=w]  if poor == 1
+display 1.3 * 0.4035
+psacalc delta treatment, rmax(.52455)
+*delta        |      9.17
+
+regress mat_pct treatment trad_mat [pweight=w]  if poor == 1
+display 1.3 * 0.399
+psacalc delta treatment, rmax(.60034)
+*delta        |      32.35
+
+regress eng_pct treatment trad_eng [pweight=w]  if poor == 1
+display 1.3 * 0.3987
+psacalc delta treatment, rmax(.51831)
+*delta        |      1.804
+
+regress chn_pct treatment trad_chn [pweight=w]  if moderate == 1
+display 1.3 * 0.3337
+psacalc delta treatment, rmax(.43381)
+*delta        |      -156.51369
+
+regress mat_pct treatment trad_mat [pweight=w]  if moderate == 1
+display 1.3 * 0.4672
+psacalc delta treatment, rmax(.60736)
+*delta        |      32.35
+
+regress eng_pct treatment trad_eng [pweight=w]  if moderate == 1
+display 1.3 * 0.4108
+psacalc delta treatment, rmax(.53404)
+*delta        |      31.783
+
+regress chn_pct treatment trad_chn [pweight=w]  if rich == 1
+display 1.3 * 0.2873
+psacalc delta treatment, rmax(.37349)
+*delta        |      -6.257
+
+regress mat_pct treatment trad_mat [pweight=w]  if rich == 1
+display 1.3 * 0.4850
+psacalc delta treatment, rmax(.6305)
+*delta        |      -0.664
+
+regress eng_pct treatment trad_eng [pweight=w]  if rich == 1
+display 1.3 * 0.4246
+psacalc delta treatment, rmax(.55198)
+*delta        |      -9.72645
+
+*Table 5 LB SES PHUDCFILY
+regress chn_pct treatment trad_chn [pweight=w]  if left == 1
+display 1.3 * 0.2689
+psacalc delta treatment, rmax(.349)
+*delta        |      18.621
+
+regress mat_pct treatment trad_mat [pweight=w]  if left == 1
+display 1.3 * 0.4545
+psacalc delta treatment, rmax(.59085)
+*delta        |      32.35
+
+regress eng_pct treatment trad_eng [pweight=w]  if left == 1
+display 1.3 * 0.3685
+psacalc delta treatment, rmax(.47905)
+*delta        |      1.804
+
+regress chn_pct treatment trad_chn [pweight=w]  if left == 0 & hukou == "Agricultural"
+display 1.3 * 0.3932
+psacalc delta treatment, rmax(.51116)
+*delta        |      -49.925
+
+regress mat_pct treatment trad_mat [pweight=w]  if left == 0 & hukou == "Agricultural"
+display 1.3 * 0.4745
+psacalc delta treatment, rmax(.61685)
+*delta        |      25.922
+
+regress eng_pct treatment trad_eng [pweight=w]  if left == 0 & hukou == "Agricultural"
+display 1.3 * 0.441
+psacalc delta treatment, rmax(.5733)
+*delta        |      1.804
+
+*Table 6 LB among low SES PHUDCFILY
+regress chn_pct treatment trad_chn [pweight=w]  if left == 1 & poor == 1
+display 1.3 * 0.2378
+psacalc delta treatment, rmax(.30914)
+*delta        |      4.65
+
+regress mat_pct treatment trad_mat [pweight=w]  if left == 1 & poor == 1
+display 1.3 * 0.4169
+psacalc delta treatment, rmax(.54197)
+*delta        |      -248.645
+
+regress eng_pct treatment trad_eng [pweight=w]  if left == 1 & poor == 1
+display 1.3 * 0.350
+psacalc delta treatment, rmax(.455)
+*delta        |      1.804
+
+regress chn_pct treatment trad_chn [pweight=w]  if left == 0 & hukou == "Agricultural" & poor == 1
+display 1.3 * 0.471
+psacalc delta treatment, rmax(.6123)
+*delta        |      10.265
+
+regress mat_pct treatment trad_mat [pweight=w]  if left == 0 & hukou == "Agricultural" & poor == 1
+display 1.3 * 0.4824
+psacalc delta treatment, rmax(.627)
+*delta        |      7.594
+
+regress eng_pct treatment trad_eng [pweight=w]  if left == 0 & hukou == "Agricultural" & poor == 1
+display 1.3 * 0.428
+psacalc delta treatment, rmax(.5564)
+*delta        |       2.341
+
+regress chn_pct treatment trad_chn [pweight=w]  if left == 0 & hukou != "Agricultural" & poor == 1
+display 1.3 * 0.5643
+psacalc delta treatment, rmax(.73359)
+*delta        |      -54.28239
+
+regress mat_pct treatment trad_mat [pweight=w]  if left == 0 & hukou != "Agricultural" & poor == 1
+display 1.3 * 0.5161
+psacalc delta treatment, rmax(.67093)
+*delta        |       17.00359
+
+regress eng_pct treatment trad_eng [pweight=w]  if left == 0 & hukou != "Agricultural" & poor == 1
+display 1.3 * 0.448
+psacalc delta treatment, rmax(.582)
+*delta        |       0.96798
